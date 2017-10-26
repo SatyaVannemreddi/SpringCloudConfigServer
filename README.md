@@ -17,13 +17,33 @@ Cons:
 <b>Note:</b> All the instructions based on STS(Spring Tool Suite) IDE.
 
 <b>Creating Spring Cloud Config Server</b>
-------------------------------------
+--------------------------------------
 
 Step1: Create new Spring Boot project. Name the project SpringCloudConfigServer. select packaging as jar and latest version of Java. Select config server dependency
 
 Step2: Open SpringCloudConfigServerApplication.java add @EnableConfigServer annotation
 
 Step3: Create a new repository named SpringConfigData on GitHub
+
+Step4: Go back to spring boot application in STS and open application.properties under src/main/resources and add below properties
+        spring.cloud.config.server.git.uri=https://github.com/SatyaVannemreddi/SpringConfigData
+        spring.cloud.config.server.native.searchLocations: classpath:offline-repository/
+        server.port=8001
+Step5: Run the application by right clicking on the project and select Run->Spring Boot App. open below url in browser to view the configuration data as JSON format.
+       http://localhost:8001/Config-Data/default/
+       
+<b>Creating Spring Cloud Config Client</b>
+--------------------------------------
+
+Step1: Create new separate Spring Boot Project and name the project SpringCloudConfigClient. select packaging as jar and latest version of Java. Select Config client dependency
+
+Step2: Create bootstrap.properties file under src/main/resources foler and place below properties
+        spring.application.name=SpringCloudConfigClient
+        spring.cloud.config.uri=http://localhost:8001
+        server.port=8002
+
+Step3: Create a rest service to access the properties defined in the Config Server.
+
 
 
 
