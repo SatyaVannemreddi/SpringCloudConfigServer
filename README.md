@@ -35,14 +35,31 @@ Step5: Run the application by right clicking on the project and select Run->Spri
 <b>Creating Spring Cloud Config Client</b>
 --------------------------------------
 
-Step1: Create new separate Spring Boot Project and name the project SpringCloudConfigClient. select packaging as jar and latest version of Java. Select Config client dependency
+Step1: Create new separate Spring Boot Project and name the project SpringCloudConfigClient. select packaging as jar and latest version of Java. Select Config client and Spring web dependencies
 
 Step2: Create bootstrap.properties file under src/main/resources foler and place below properties
-        spring.application.name=SpringCloudConfigClient
-        spring.cloud.config.uri=http://localhost:8001
+        spring.application.name=SpringCloudConfigClient</br>
+        spring.cloud.config.uri=http://localhost:8001</br>
         server.port=8002
 
 Step3: Create a rest service to access the properties defined in the Config Server.
+
+@RestController
+public class ConfigClientRService {
+	@Value("${FirstName}")
+	String firstName;
+	
+	@Value("${LastName}")
+	String lastName;
+	
+	@GetMapping("/hello")
+	public String sayHello(){
+		return "Hello "+firstName+" "+lastName;
+	}
+
+}
+
+Step4: run the app and access url http://localhost:8002/hello. This will give the result Hello Satyanarayana Vannemreddi
 
 
 
