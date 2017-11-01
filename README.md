@@ -1,5 +1,5 @@
 # Spring Cloud Config Server client
-This repository is for creating config server and client using various file source such as GitHub, file system and Vault
+This repository is for creating config server and client using various file sources such as GitHub, file system and Vault
 
 Microservice need various configuration data to serve different busineeds. Placing configuration details within the application is not a good idea because it requires service restart every time you update the configuration. So it requires solution to keep all the configuration data at a centralized place and that can be updated at any point of time and those values should be availabe to clients without restarting/restaging the services. Spring Cloud provides Config Server and Client APIs to resolve this issue.
 
