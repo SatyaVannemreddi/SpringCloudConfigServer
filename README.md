@@ -61,8 +61,77 @@ public class ConfigClientRService {
 
 Step4: run the app and access url http://localhost:8002/hello. This will give the result Hello Satyanarayana Vannemreddi
 
+<b>Creating Spring Cloud Config Client with refresh without restart app</b>
 
+Step1: Create new separate Spring Boot Project and name the project SpringCloudRefreshConfigData. select packaging as jar and latest version of Java. Select Config client, actuator and Spring web dependencies
 
+Step2: Create bootstrap.properties file under src/main/resources foler and place below properties. this is to specify the config server url
+        spring.application.name=personDetails</br>
+        spring.cloud.config.uri=http://localhost:8001</br>
+        server.port=8002
 
+Step3: Add file named personDetails-PROD.properties with below values in git hub. here PROD is the profile name.
+
+person.firstName=Satyanarayana
+person.lastName=Vannemreddi
+person.city=Irving
+person.state=TX
+
+Step4: Create a bean to access properties to access the properties defined in property file.
+
+@ConfigurationProperties(prefix="person")
+@Component
+public class PersonDetails {
+	String firstName;
+	String lastName;
+	String city;
+	String state;
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+}
+
+Step5: Create a controller to test the properties values
+
+@RestController
+@RefreshScope
+public class PersonDetailRestController {
+	
+	@Autowired
+	PersonDetails person;
+	
+	@GetMapping("/getPersonDetail")
+	public PersonDetails getPersonDetail(){
+		return person;
+	}
+
+}
+
+Step6: Run the app and access url http://localhost:8002/getPersonDetail. It should return properties defined in git repository
+
+Step7: Change the propeties and try the above url again, but properties won't be refreshed this time.
+
+Step8: Call url http://localhost:8002/refresh url to update the properties and try above service url to see the latest property values
 
 
