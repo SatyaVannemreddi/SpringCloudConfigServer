@@ -81,6 +81,7 @@ Step4: Create a bean to access properties to access the properties defined in pr
 
 @ConfigurationProperties(prefix="person")
 @Component
+
 public class PersonDetails {
 	String firstName;
 	String lastName;
